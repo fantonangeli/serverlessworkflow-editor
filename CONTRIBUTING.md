@@ -10,7 +10,7 @@ This project is the official, vendor-neutral visual editor for the [Serverless W
 
 To build and run the editor locally, you will need:
 - **Node.js** (v24.x or higher)
-- **npm** or **Yarn**
+- **npm** or **pnpm**
 
 ## Building the Project
 
@@ -57,6 +57,7 @@ For new features or architectural changes:
 * **Linting & Formatting**: Follow the existing code style and formatting conventions used in the files you are editing. If the package you are changing defines linting or formatting scripts, run those before submitting code.
 * **Testing**: Ensure that logic changes are covered by tests, and run the relevant test commands for the packages you modify (see their documentation or `package.json`).
 * **Component Design**: Follow functional component patterns and ensure that UI state is managed predictably within the monorepo structure.
+* **New package creation**: If a new package needs to be created, please follow the standards used by the existing packages, including the standard commands `build`, `build-prod`, `test`, `e2e-test`, `lint`
 
 ## Pull Request Process
 
