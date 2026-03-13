@@ -8,6 +8,9 @@
       "node",
     ],
 
+    // Jest support for ECMAScript Modules (ESM) is considered experimental, override to commonjs just for testing 
+    "module": "commonjs",
+
     // Tests can import JS or TS freely
     "allowJs": true,
 
