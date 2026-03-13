@@ -1,11 +1,11 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "./tsconfig.json",
 
   "compilerOptions": {
     "types": [
       "jest",
       "@testing-library/jest-dom",
-      "node"
+      "node",
     ],
 
     // Tests can import JS or TS freely
@@ -20,14 +20,11 @@
     "noEmit": true,
 
     // Tests often work with dynamic/loosely typed objects
-    "exactOptionalPropertyTypes": false
+    "exactOptionalPropertyTypes": false,
   },
-
   "include": [
     "**/*.test.ts",
     "**/*.test.tsx",
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "tests/**/*"
-  ]
+    "**/tests/**/*",
+  ],
 }

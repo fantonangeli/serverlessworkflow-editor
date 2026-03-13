@@ -20,7 +20,7 @@ CNCF Serverless Workflow Specification Visual Editor
 ## Prerequisites
 
 To build and run the editor locally, you will need:
-- **Node.js 24** (current LTS version; see https://nodejs.org/)
+- **Node.js 22** (current LTS version; see https://nodejs.org/)
 - **pnpm 10.31.0**
 
 ## Building the Project
