@@ -29,7 +29,7 @@
     "clean:storybook": "rimraf ./dist-storybook",
     "build:dev": "pnpm clean && tsc -p tsconfig.json",
     "build:prod": "pnpm lint && pnpm clean && tsc -p tsconfig.json && pnpm test",
-    "test": "jest --silent --verbose --passWithNoTests",
+    "test": "vitest run --passWithNoTests",
     "start": "storybook dev -p 6006",
     "build:storybook": "pnpm clean:storybook && storybook build --output-dir ./dist-storybook"
   },
@@ -58,15 +58,15 @@
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitest/ui": "^3.0.0",
     "eslint-plugin-storybook": "^10.2.16",
     "globals": "^17.4.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^30.2.0",
-    "jest-environment-jsdom": "^30.2.0",
+    "jsdom": "^25.0.0",
     "jiti": "^2.6.1",
     "rimraf": "^6.1.3",
     "storybook": "^10.2.16",
-    "ts-jest": "^29.4.6",
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   }

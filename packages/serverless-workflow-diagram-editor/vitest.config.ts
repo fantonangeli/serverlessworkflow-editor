@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-import type { Config } from "jest";
+import { defineConfig } from "vitest/config";
 
-const config: Config = {
-  preset: "ts-jest",
-  testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/tests/setupTests.ts"],
-  transform: { "^.+\\.(ts|tsx|js|jsx)$": ["ts-jest", { tsconfig: "tsconfig.test.json" }] },
-  moduleNameMapper: {
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: ["./tests/setupTests.ts"],
+    css: true,
   },
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx"],
-  resolver: undefined,
-};
-
-export default config;
+});
