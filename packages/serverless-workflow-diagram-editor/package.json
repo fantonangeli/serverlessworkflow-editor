@@ -33,14 +33,16 @@
     "start": "storybook dev -p 6006",
     "build:storybook": "pnpm clean:storybook && storybook build --output-dir ./dist-storybook"
   },
+  "peerDependencies": {
+     "react": "^19.2.4",
+     "react-dom": "^19.2.4"
+   },
   "dependencies": {
     "@patternfly/patternfly": "^6.4.0",
     "@patternfly/react-core": "^6.4.0",
     "@patternfly/react-icons": "^6.4.0",
     "@patternfly/react-styles": "^6.4.0",
-    "@patternfly/react-tokens": "^6.4.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "@patternfly/react-tokens": "^6.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",
@@ -68,6 +70,8 @@
     "jiti": "^2.6.1",
     "rimraf": "^6.1.3",
     "storybook": "^10.2.16",
-    "ts-jest": "^29.4.6"
+    "ts-jest": "^29.4.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }
