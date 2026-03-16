@@ -28,9 +28,9 @@ are closed, and optionally imports pre-existing repo issues on demand.
 
 | Event | Action |
 |---|---|
-| Issue opened | Issue is added to the target project; initial field values are applied (skipped if `GH_SYNC_ENABLED=false` or `off`) |
-| Issue closed | Project item Status is updated to the configured close status (skipped if `GH_SYNC_ENABLED=false` or `off`) |
-| `workflow_dispatch` | If `GH_IMPORT_EXISTING_ISSUES=true`, imports all open repo issues not yet in the project with initial field values applied |
+| Issue opened | Issue is added to the target project; initial field values are applied (skipped if `PSYNC_ENABLED=false` or `off`) |
+| Issue closed | Project item Status is updated to the configured close status (skipped if `PSYNC_ENABLED=false` or `off`) |
+| `workflow_dispatch` | If `PSYNC_IMPORT_EXISTING=true`, imports all open repo issues not yet in the project with initial field values applied |
 
 The project item is natively linked to the source issue — no custom fields are
 needed. Clicking the item in the project board opens the original issue.
@@ -47,7 +47,7 @@ Required scopes:
 - `project` — read/write access to GitHub Projects v2
 - `read:org` — required to resolve the org's project by number
 - `repo` (private repos) or `public_repo` (public repos) — required only if
-  `GH_ISSUE_INITIAL_VALUES` includes `Assignees=...`, as the workflow calls the
+  `PSYNC_INITIAL_VALUES` includes `Assignees=...`, as the workflow calls the
   REST API to add assignees directly to the source repo issue
 
 > Classic PATs only. Fine-grained PATs do not yet support Projects v2 mutations.
@@ -56,39 +56,43 @@ Required scopes:
 
 Go to **Repo → Settings → Secrets and variables → Actions → Secrets**:
 
-| Name | Value |
-|---|---|
-| `GH_PAT_TOKEN` | The PAT created above |
+| Name | Fallback name | Value |
+|---|---|---|
+| `PSYNC_PAT` | `GH_PAT_TOKEN` | The PAT created above |
 
 ### 3. Add the variables
 
 Go to **Repo → Settings → Secrets and variables → Actions → Variables**:
 
-| Name | Required | Default | Example |
-|---|---|---|---|
-| `GH_TARGET_PROJECT` | yes | — | `my-org:1` |
-| `GH_ISSUE_INITIAL_VALUES` | no | — | `Status=Backlog, Area=Tooling, Assignees=user1` |
-| `GH_ISSUE_CLOSE_STATUS` | no | `Done` | `Done` |
-| `GH_SYNC_ENABLED` | no | `true` | `false` |
-| `GH_IMPORT_EXISTING_ISSUES` | no | `false` | `true` |
-| `GH_AUTHORS_FILTER` | no | — | `user1, user2` |
+| Name | Fallback name | Required | Default | Description | Example |
+|---|---|---|---|---|---|
+| `PSYNC_TARGET` | `GH_TARGET_PROJECT` | yes | — | Target project in `org:project_number` format | `my-org:1` |
+| `PSYNC_INITIAL_VALUES` | `GH_ISSUE_INITIAL_VALUES` | no | — | Comma-separated `field=value` pairs applied to new project items | `Status=Backlog, Area=Tooling, Assignees=user1` |
+| `PSYNC_CLOSE_STATUS` | `GH_ISSUE_CLOSE_STATUS` | no | `Done` | Status option name set on the project item when the issue is closed | `Done` |
+| `PSYNC_ENABLED` | `GH_SYNC_ENABLED` | no | `true` | Set to `false` or `off` to pause syncing without removing the workflow | `false` |
+| `PSYNC_IMPORT_EXISTING` | `GH_IMPORT_EXISTING_ISSUES` | no | `false` | Set to `true` and trigger manually to bulk-import all open issues not yet in the project | `true` |
+| `PSYNC_AUTHORS_FILTER` | `GH_AUTHORS_FILTER` | no | — | Comma-separated list of GitHub usernames; only issues opened by these users are synced. Empty means all authors are included | `user1, user2` |
+
+> **Backward compatibility** — the workflow reads the `PSYNC_*` name first and
+> falls back to the `GH_*` name when the new variable is not set. Existing setups
+> using the old names continue to work without changes.
 
 The project number is visible in the project URL:
 `https://github.com/orgs/<org>/projects/<number>`
 
-**`GH_SYNC_ENABLED`** — set to `false` or `off` to pause syncing without removing
+**`PSYNC_ENABLED`** — set to `false` or `off` to pause syncing without removing
 the workflow. `workflow_dispatch` runs (e.g. for importing) are not affected.
 
-**`GH_AUTHORS_FILTER`** — comma-separated list of GitHub usernames. When set, only
+**`PSYNC_AUTHORS_FILTER`** — comma-separated list of GitHub usernames. When set, only
 issues created by one of the listed authors are synced to the target project. If
 unset or empty, all authors are included.
 
-**`GH_IMPORT_EXISTING_ISSUES`** — set to `true` and trigger the workflow manually
+**`PSYNC_IMPORT_EXISTING`** — set to `true` and trigger the workflow manually
 via **Actions → Run workflow** to import all open repo issues not already in the
-project. The same `GH_ISSUE_INITIAL_VALUES` rules apply. Issues already in the
+project. The same `PSYNC_INITIAL_VALUES` rules apply. Issues already in the
 project are skipped. The run prints a summary: `Imported: N, Failed: N`.
 
-#### `GH_ISSUE_INITIAL_VALUES` format
+#### `PSYNC_INITIAL_VALUES` format
 
 Comma-separated `field=value` pairs. Field names must match the project field
 names exactly (case-sensitive). Example:
@@ -110,7 +114,7 @@ Supported field types:
 ### 4. Ensure the target project has a Status field
 
 The workflow looks for a **single-select field named exactly `Status`**. The
-option names used by `GH_ISSUE_INITIAL_VALUES` and `GH_ISSUE_CLOSE_STATUS` must
+option names used by `PSYNC_INITIAL_VALUES` and `PSYNC_CLOSE_STATUS` must
 exist in the project (case-sensitive).
 
 Default options required unless overridden:
@@ -126,7 +130,7 @@ Default options required unless overridden:
 - **Sub-issues are not synced** — GitHub does not emit webhook events for
   sub-issues; only top-level issues trigger the `issues` event.
 - **Status field name is hardcoded** — the field must be named `Status`.
-- **Number and date fields** in `GH_ISSUE_INITIAL_VALUES` are not supported;
+- **Number and date fields** in `PSYNC_INITIAL_VALUES` are not supported;
   only single-select and text fields.
 
 ---
@@ -135,8 +139,8 @@ Default options required unless overridden:
 
 ### `gh: To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN environment variable`
 
-The `GH_PAT_TOKEN` secret is not set or is empty. Verify it exists under
-**Repo → Settings → Secrets and variables → Actions → Secrets**.
+Neither `PSYNC_PAT` nor `GH_PAT_TOKEN` is set or both are empty. Verify that at
+least one exists under **Repo → Settings → Secrets and variables → Actions → Secrets**.
 
 ### `Error: Process completed with exit code 1` on the GraphQL steps
 
@@ -158,7 +162,7 @@ gh api graphql -f query='
 Common causes:
 - The PAT does not have access to the target org's project
 - The project number is wrong
-- The org name in `GH_TARGET_PROJECT` has a typo
+- The org name in `PSYNC_TARGET` (or `GH_TARGET_PROJECT`) has a typo
 
 ### Item not found on close (`item_id` is empty)
 
@@ -166,18 +170,18 @@ If the issue is not already in the project when it is closed (e.g., it was opene
 
 If the close path still fails, likely causes are:
 - The PAT lacks `project` write access to the target org's project
-- The project ID lookup failed (check `GH_TARGET_PROJECT` format and PAT scopes)
+- The project ID lookup failed (check `PSYNC_TARGET` (or `GH_TARGET_PROJECT`) format and PAT scopes)
 
 ### Status not updated on close
 
 Verify the target project has:
 - A single-select field named exactly `Status`
-- An option matching the value of `GH_ISSUE_CLOSE_STATUS` (default: `Done`)
+- An option matching the value of `PSYNC_CLOSE_STATUS` (or `GH_ISSUE_CLOSE_STATUS`, default: `Done`)
 
 Field and option names are case-sensitive.
 
 ### Field not found warning in `Set initial field values`
 
 The step prints `Warning: field '<name>' not found, skipping.` when a key in
-`GH_ISSUE_INITIAL_VALUES` does not match any field in the project. Check for
+`PSYNC_INITIAL_VALUES` (or `GH_ISSUE_INITIAL_VALUES`) does not match any field in the project. Check for
 typos or extra spaces in the variable value.
