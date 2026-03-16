@@ -16,7 +16,7 @@
   "scripts": {
     "format": "pnpm --filter @serverless-workflow-settings/linter format",
     "format:check": "pnpm --filter @serverless-workflow-settings/linter format:check",
-    "build:prod": "pnpm lint && pnpm -r --stream build:prod",
+    "build:prod": "pnpm -r --stream build:prod",
     "build:dev": "pnpm -r --stream build:dev",
     "prepare": "husky"
   },
@@ -25,7 +25,6 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "oxfmt": "^0.41.0",
-    "oxlint": "^1.56.0",
     "typescript": "^5.9.3"
   },
   "lint-staged": {

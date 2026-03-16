@@ -28,10 +28,10 @@ This package provides centralized configuration for Oxlint and Oxfmt
 
 ```json
 {
+  "name": "your-package-name",
   "scripts": {
-    "lint": "linter src/ stories/",
+    "lint": "linter src/ stories/"
   },
-  ...
   "devDependencies": {
     "@serverless-workflow-settings/linter": "workspace:*"
   }
