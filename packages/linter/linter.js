@@ -15,10 +15,15 @@
  */
 
 import { spawn } from "child_process";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const oxlintPath = join(__dirname, "node_modules", ".bin", "oxlint");
 
 const args = ["--config", "oxlintrc.json", ...process.argv.slice(2)];
 
-const oxlint = spawn("oxlint", args, {
+const oxlint = spawn(oxlintPath, args, {
   stdio: "inherit",
 });
 
