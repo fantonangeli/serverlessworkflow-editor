@@ -15,7 +15,6 @@
  */
 
 import { defineConfig } from "vitest/config";
-import { webdriverio } from "@vitest/browser-webdriverio";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
@@ -30,17 +29,5 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./tests/setupTests.ts"],
     css: true,
-    browser: {
-      enabled: true,
-      provider: webdriverio({
-        capabilities: {
-          browserName: "chrome",
-          "goog:chromeOptions": {
-            args: ["--headless"], // Optional: run headless
-          },
-        },
-      }),
-      instances: [{ browser: "chrome" }],
-    },
   },
 });
