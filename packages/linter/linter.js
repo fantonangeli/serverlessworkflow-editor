@@ -19,7 +19,8 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const oxlintPath = join(__dirname, "node_modules", ".bin", "oxlint");
+const oxlintBin = process.platform === "win32" ? "oxlint.cmd" : "oxlint";
+const oxlintPath = join(__dirname, "node_modules", ".bin", oxlintBin);
 
 const args = ["--config", "oxlintrc.json", ...process.argv.slice(2)];
 
