@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-import { expect, afterEach } from "vitest";
+import { afterEach } from "vitest";
 import { cleanup } from "@testing-library/react";
-import * as matchers from "@testing-library/jest-dom/matchers";
 import "@testing-library/jest-dom/vitest"; // This extends vitest's expect with jest-dom matchers
-
-// Extend vitest's expect with jest-dom matchers
-expect.extend(matchers);
 
 // Run cleanup after each test to unmount React components and clean up the DOM
 afterEach(() => {
