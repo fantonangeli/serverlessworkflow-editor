@@ -29,7 +29,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,md,yml,yaml}": [
-      "oxfmt"
+      "pnpm format"
     ]
   },
   "engines": {
