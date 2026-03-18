@@ -19,10 +19,10 @@ import { existsSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
-const configFilename = ".oxlintrc.json";
+const configFilename = ".oxfmtrc.json";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const oxlintBin = process.platform === "win32" ? "oxlint.cmd" : "oxlint";
-const oxlintPath = join(__dirname, "node_modules", ".bin", oxlintBin);
+const oxfmtBin = process.platform === "win32" ? "oxfmt.cmd" : "oxfmt";
+const oxfmtPath = join(__dirname, "node_modules", ".bin", oxfmtBin);
 
 // Use local configuration if exists, otherwise fallback to linter's config
 const localConfigPath = join(process.cwd(), configFilename);
@@ -31,16 +31,16 @@ const selectedConfig = existsSync(localConfigPath) ? localConfigPath : configPat
 
 const args = ["--config", selectedConfig, ...process.argv.slice(2)];
 
-const oxlint = spawn(oxlintPath, args, {
+const oxfmt = spawn(oxfmtPath, args, {
   cwd: process.cwd(),
   stdio: "inherit",
 });
 
-oxlint.on("error", (err) => {
-  console.error("Failed to start oxlint:", err.message);
+oxfmt.on("error", (err) => {
+  console.error("Failed to start oxfmt:", err.message);
   process.exit(1);
 });
 
-oxlint.on("exit", (code) => {
+oxfmt.on("exit", (code) => {
   process.exit(code ?? 0);
 });

@@ -3,18 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "bin": {
+    "formatter": "./formatter.js",
     "linter": "./linter.js"
   },
   "files": [
-    "oxlintrc.json",
-    "linter.js"
+    ".oxlintrc.json",
+    ".oxfmtrc.json",
+    "linter.js",
+    "formatter.js"
   ],
   "type": "module",
   "main": "oxlintrc.json",
   "scripts": {
-    "lint": "oxlint --config oxlintrc.json",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check"
+    "lint": "linter",
+    "format": "formatter",
+    "format:check": "formatter --check"
   },
   "dependencies": {
     "oxfmt": "^0.41.0",
