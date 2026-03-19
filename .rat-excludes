@@ -1,7 +1,5 @@
 .gitattributes
 .npmrc
-.prettierignore
-.prettierrc
 .rat-excludes
 .rat-reports
 pnpm-lock.yaml
