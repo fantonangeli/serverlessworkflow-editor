@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-import React from "react";
-import { DiagramEditor as SWDiagramEditor, DiagramEditorProps } from "../src/diagram-editor/DiagramEditor";
+import {
+  DiagramEditor as SWDiagramEditor,
+  DiagramEditorProps,
+} from "../src/diagram-editor/DiagramEditor";
 
 /** Primary UI component for user interaction */
 export const DiagramEditor = ({ ...props }: DiagramEditorProps) => {

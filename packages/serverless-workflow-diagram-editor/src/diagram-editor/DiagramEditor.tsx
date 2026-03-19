@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { CSSProperties } from "react";
+import type { CSSProperties } from "react";
 
 const clickmeBtnStyle: CSSProperties = {
   border: "2px solid blue",

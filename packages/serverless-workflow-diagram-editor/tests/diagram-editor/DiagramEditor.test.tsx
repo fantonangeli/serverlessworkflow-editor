@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { DiagramEditor } from "../../src/diagram-editor";
 import userEvent from "@testing-library/user-event";

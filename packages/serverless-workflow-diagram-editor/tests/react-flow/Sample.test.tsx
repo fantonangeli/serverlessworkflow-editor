@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { expect, describe, it } from "vitest";
+
 describe("MyComponent", () => {
   it("Just a sample test", () => {
     expect(true).toBeTruthy();
