@@ -28,7 +28,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.event.pull_request && format('ci-build-full-pr-{0}', github.event.pull_request.number) || format('ci-build-full-push-main-{0}', github.sha) }}
+  group: ${{ github.event.pull_request && format('ci-build-full-pr-{0}', github.event.pull_request.number) || format('ci-build-full-push-main-{0}', github.ref) }}
   cancel-in-progress: true
 
 jobs:
