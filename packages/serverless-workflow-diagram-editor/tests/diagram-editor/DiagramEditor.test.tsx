@@ -24,7 +24,7 @@ describe("DiagramEditor Component", () => {
   });
 
   test("Renders react flow Diagram component", async () => {
-    const locale = "EN";
+    const locale = "en";
     const isReadOnly = true;
 
     render(<DiagramEditor locale={locale} isReadOnly={isReadOnly} />);

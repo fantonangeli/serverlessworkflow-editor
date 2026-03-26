@@ -36,6 +36,6 @@ type Story = StoryObj<typeof meta>;
 export const Component: Story = {
   args: {
     isReadOnly: true,
-    locale: "EN",
+    locale: "en",
   },
 };

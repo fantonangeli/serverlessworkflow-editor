@@ -64,10 +64,6 @@ export const Diagram = ({ divRef, ref }: DiagramProps) => {
     (changes) => setEdges((edgesSnapshot) => RF.applyEdgeChanges(changes, edgesSnapshot)),
     [],
   );
-  const onConnect = React.useCallback<RF.OnConnect>(
-    (params) => setEdges((edgesSnapshot) => RF.addEdge(params, edgesSnapshot)),
-    [],
-  );
 
   React.useImperativeHandle(
     ref,
@@ -86,7 +82,6 @@ export const Diagram = ({ divRef, ref }: DiagramProps) => {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
         onlyRenderVisibleElements={true}
         zoomOnDoubleClick={false}
         elementsSelectable={true}
