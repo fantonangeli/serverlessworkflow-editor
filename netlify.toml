@@ -21,9 +21,12 @@
   command = """
     set -e
     PREVIEW_PACKAGE_NAME='@serverlessworkflow/diagram-editor'
-    pnpm -F '...[origin/main]' -rc exec 'echo "$PNPM_PACKAGE_NAME"' | grep -Fqx "$PREVIEW_PACKAGE_NAME" || { echo "Skip build: No changes detected"; exit 0; }
-    echo "Building ${PREVIEW_PACKAGE_NAME}##################################################"
     pnpm -F "${PREVIEW_PACKAGE_NAME}..." build:dev
     pnpm -F "$PREVIEW_PACKAGE_NAME" build:storybook
   """
   publish = "packages/serverless-workflow-diagram-editor/dist-storybook"
+  ignore = """
+    PREVIEW_PACKAGE_NAME='@serverlessworkflow/diagram-editor'
+    npm install -g pnpm@10.31.0
+    ! pnpm -F '...[origin/issue-30-feat-Add-GitHub-Action-to-publish-Storybook-preview-for-every-PR-via-netlify]' -rc exec 'echo "$PNPM_PACKAGE_NAME"' | grep -Fqx "$PREVIEW_PACKAGE_NAME"
+  """
