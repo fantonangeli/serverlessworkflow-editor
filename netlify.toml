@@ -22,7 +22,7 @@
     set -e
     PREVIEW_PACKAGE_NAME='@serverlessworkflow/diagram-editor'
     pnpm -F '...[origin/main]' -rc exec 'echo "$PNPM_PACKAGE_NAME"' | grep -Fqx "$PREVIEW_PACKAGE_NAME" || { echo "Skip build: No changes detected"; exit 0; }
-    echo "Building ${PREVIEW_PACKAGE_NAME}####################################################################################################"
+    echo "Building ${PREVIEW_PACKAGE_NAME}##################################################"
     pnpm -F "${PREVIEW_PACKAGE_NAME}..." build:dev
     pnpm -F "$PREVIEW_PACKAGE_NAME" build:storybook
   """
