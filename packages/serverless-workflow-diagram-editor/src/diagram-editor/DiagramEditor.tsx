@@ -52,6 +52,7 @@ export const DiagramEditor = ({ ref }: DiagramEditorProps) => {
 
   return (
     <>
+      Netlify preview is working!
       <Diagram ref={diagramRef} divRef={diagramDivRef} />
     </>
   );
