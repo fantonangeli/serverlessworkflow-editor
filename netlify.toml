@@ -28,7 +28,7 @@
   publish = "packages/serverless-workflow-diagram-editor/dist-storybook"
   ignore = """
     set -e
-    git fetch --no-tags --depth=1 origin main:refs/remotes/origin/issue-30-feat-Add-GitHub-Action-to-publish-Storybook-preview-for-every-PR-via-netlify
+    git fetch --no-tags --depth=1 origin issue-30-feat-Add-GitHub-Action-to-publish-Storybook-preview-for-every-PR-via-netlify:refs/remotes/origin/issue-30-feat-Add-GitHub-Action-to-publish-Storybook-preview-for-every-PR-via-netlify
     npm i -g "pnpm@$PNPM_VERSION"
     ! pnpm -F '...[origin/issue-30-feat-Add-GitHub-Action-to-publish-Storybook-preview-for-every-PR-via-netlify]' -rc exec 'echo "$PNPM_PACKAGE_NAME"' | grep -Fqx "$PREVIEW_PACKAGE_NAME"
   """
