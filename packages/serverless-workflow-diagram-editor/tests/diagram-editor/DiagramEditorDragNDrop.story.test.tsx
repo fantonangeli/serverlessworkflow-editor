@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { composeStories } from "@storybook/react-vite";
 import * as stories from "../../stories/DiagramEditorDragNDrop.stories";
 import { vi, test, expect, afterEach, describe } from "vitest";
@@ -23,6 +23,9 @@ import userEvent from "@testing-library/user-event";
 
 // Composes all stories in the file
 const { Component } = composeStories(stories);
+const basicValidWorkflowYamlFile = new File([BASIC_VALID_WORKFLOW_YAML], "workflow.yaml", {
+  type: "text/yaml",
+});
 
 describe("Story - DiagramEditorDragNDrop component", () => {
   afterEach(() => {
@@ -54,13 +57,36 @@ describe("Story - DiagramEditorDragNDrop component", () => {
     const wfFileUploadInput = screen.getByTestId("story-workflow-file-upload");
     const reactFlowContainer = screen.queryByTestId("diagram-container");
 
-    expect(wfFileDND).toBeInTheDocument();
     expect(wfFileUploadInput).toBeInTheDocument();
     expect(reactFlowContainer).not.toBeInTheDocument();
 
     const user = userEvent.setup();
-    const file = new File([BASIC_VALID_WORKFLOW_YAML], "workflow.yaml", { type: "text/yaml" });
-    await user.upload(wfFileUploadInput, file);
+    await user.upload(wfFileUploadInput, basicValidWorkflowYamlFile);
+
+    await waitFor(() => {
+      const uploadedReactFlowContainer = screen.queryByTestId("diagram-container");
+      expect(uploadedReactFlowContainer).toBeInTheDocument();
+    });
+  });
+
+  test("Drag and drop a workflow file and renders diagram", async () => {
+    const locale = "en";
+    const isReadOnly = true;
+
+    render(<Component locale={locale} isReadOnly={isReadOnly} />);
+
+    const wfFileDND = screen.getByTestId("story-workflow-file-dnd");
+    const reactFlowContainer = screen.queryByTestId("diagram-container");
+
+    expect(wfFileDND).toBeInTheDocument();
+    expect(reactFlowContainer).not.toBeInTheDocument();
+
+    const dataTransfer = {
+      files: [basicValidWorkflowYamlFile],
+      types: ["Files"],
+    };
+
+    fireEvent.drop(wfFileDND, { dataTransfer });
 
     await waitFor(() => {
       const uploadedReactFlowContainer = screen.queryByTestId("diagram-container");
