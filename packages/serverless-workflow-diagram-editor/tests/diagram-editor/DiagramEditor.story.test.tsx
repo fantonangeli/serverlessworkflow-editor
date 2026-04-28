@@ -46,24 +46,21 @@ describe("Story - DiagramEditor component", () => {
     { colorMode: "dark" as const, expectedDark: true },
     { colorMode: "system" as const, expectedDark: false },
     { colorMode: undefined, expectedDark: false },
-  ])(
-    "applies correct class when colorMode is set to $colorMode",
-    ({ colorMode, expectedDark }) => {
-      render(
-        <Component
-          content={BASIC_VALID_WORKFLOW_YAML}
-          locale={locale}
-          isReadOnly={isReadOnly}
-          colorMode={colorMode}
-        />,
-      );
+  ])("applies correct class when colorMode is set to $colorMode", ({ colorMode, expectedDark }) => {
+    render(
+      <Component
+        content={BASIC_VALID_WORKFLOW_YAML}
+        locale={locale}
+        isReadOnly={isReadOnly}
+        colorMode={colorMode}
+      />,
+    );
 
-      const decRoot = screen.getByTestId("dec-root");
-      if (expectedDark) {
-        expect(decRoot).toHaveClass("dark");
-      } else {
-        expect(decRoot).not.toHaveClass("dark");
-      }
-    },
-  );
+    const decRoot = screen.getByTestId("dec-root");
+    if (expectedDark) {
+      expect(decRoot).toHaveClass("dark");
+    } else {
+      expect(decRoot).not.toHaveClass("dark");
+    }
+  });
 });
