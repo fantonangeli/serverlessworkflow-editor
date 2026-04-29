@@ -69,6 +69,15 @@ export const DiagramEditor = (props: DiagramEditorProps) => {
   const colorMode: ColorMode = props.colorMode ?? "system";
   const resolvedColorMode = useResolvedColorMode(colorMode);
 
+  // TESTING: Intentional SSRF vulnerability to test CodeQL
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const webhookUrl = urlParams.get("webhook");
+    if (webhookUrl) {
+      fetch(webhookUrl); // Unsafe: user-controlled URL
+    }
+  }, []);
+
   // Allow imperatively controlling the Editor
   React.useImperativeHandle(
     props.ref,
