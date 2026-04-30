@@ -184,6 +184,7 @@ export const Diagram = ({ divRef, ref, colorMode = "light" }: DiagramProps) => {
 
   return (
     <div ref={divRef} className="dec:h-full dec:relative" data-testid={"diagram-container"}>
+      Safe change
       <RF.ReactFlow
         nodeTypes={NodeTypes}
         nodes={nodes}
