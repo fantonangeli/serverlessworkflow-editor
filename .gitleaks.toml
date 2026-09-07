@@ -1,0 +1,6 @@
+[allowlist]
+description = "Skip StoryBook generated sb-manager/globals-runtime.js"
+
+paths = [
+  '''^issue-[0-9]+/sb-manager/globals-runtime\.js$'''
+]
