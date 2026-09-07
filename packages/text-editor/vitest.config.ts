@@ -28,14 +28,14 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: "jsdom",
-    setupFiles: ["./tests/setupTests.ts"],
     projects: [
       {
         extends: true,
         test: {
           name: "unit",
           css: true,
+          environment: "jsdom",
+          setupFiles: ["./tests/setupTests.ts"],
           include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
         },
       },
